@@ -32,7 +32,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # モデル読み込み
 # -------------------------
 decoder = Decoder(latent_dim=3)
-decoder.load_state_dict(torch.load("cvae.pth", map_location=device))
+
+# state_dictの読み込み
+state_dict = torch.load("cvae.pth", map_location=device)
+# 'decoder.' で始まるものだけ抜き出してキー名も直す
+decoder_state_dict = {k.replace("decoder.", ""): v for k, v in state_dict.items() if k.startswith("decoder.")}
+# デコーダモデルへロード
+decoder.load_state_dict(decoder_state_dict)
+
 decoder.to(device)
 decoder.eval()
 
