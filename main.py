@@ -46,7 +46,7 @@ decoder.eval()
 # -------------------------
 # Streamlit UI
 # -------------------------
-st.title("🎨 条件付き画像生成アプリ（cVAE）")
+st.title("🎨 条件付き画像生成アプリ（cVAE）潜在変数の各次元の意味分析")
 
 # ラベル選択
 digit = st.selectbox("生成したい数字ラベル", list(range(10)))
