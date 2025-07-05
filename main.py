@@ -52,22 +52,13 @@ st.title("🎨 条件付き画像生成アプリ（cVAE）")
 digit = st.selectbox("生成したい数字ラベル", list(range(10)))
 
 # 潜在変数スライダー（z ∈ ℝ³）
-z_values = []
-z_labels = [
-    ("線の太さ", -3.0, 3.0, 1.0),   # z[0]
-    ("幅",       -3.0, 3.0, 2.0),   # z[1]
-    ("回転",     -180,  180,  0.0)  # z[2]
-]
+labels = ["z[0]たぶん線の太さ", "z[1]たぶん幅", "z[2]たぶん回転"]  # z[0], z[1], z[2] の意味をラベル化
 
-for i, (label, min_val, max_val, default) in enumerate(z_labels):
-    z = st.slider(
-        f"z[{i}] – {label}",
-        min_value=min_val,
-        max_value=max_val,
-        value=default,
-        step=0.1 if isinstance(min_val, float) else 1
-    )
-    z_values.append(z)
+z_values = []
+for i, label in enumerate(labels):
+    # 内部ロジックは変えず、表示だけ最小限変更
+    z_values.append(st.slider(label, -3.0, 3.0, 0.0, 0.1))
+
 
 
 # テンソル変換
