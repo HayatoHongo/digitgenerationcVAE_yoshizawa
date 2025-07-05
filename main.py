@@ -53,8 +53,22 @@ digit = st.selectbox("生成したい数字ラベル", list(range(10)))
 
 # 潜在変数スライダー（z ∈ ℝ³）
 z_values = []
-for i in range(3):
-    z_values.append(st.slider(f"z[{i}]", -3.0, 3.0, 0.0, 0.1))
+z_labels = [
+    ("線の太さ", -3.0, 3.0, 1.0),   # z[0]
+    ("幅",       -3.0, 3.0, 2.0),   # z[1]
+    ("回転",     -180,  180,  0.0)  # z[2]
+]
+
+for i, (label, min_val, max_val, default) in enumerate(z_labels):
+    z = st.slider(
+        f"z[{i}] – {label}",
+        min_value=min_val,
+        max_value=max_val,
+        value=default,
+        step=0.1 if isinstance(min_val, float) else 1
+    )
+    z_values.append(z)
+
 
 # テンソル変換
 z_tensor = torch.tensor(z_values, dtype=torch.float32).unsqueeze(0).to(device)
